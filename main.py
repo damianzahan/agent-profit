@@ -8,13 +8,20 @@ PORT = int(os.environ.get("PORT", 10000))
 WALLET = os.environ.get("WALLET", "0x...ne setat")
 EMAIL = "damianzahan@yahoo.com"
 
+def env(*keys):
+    for k in keys:
+        v = os.environ.get(k)
+        if v:
+            return v
+    return ""
+
 # AICI II DAI TU ACCES - EL LE FOLOSESTE SINGUR
 ACCESURI = {
-    "shopify": os.environ.get("SHOPIFY_TOKEN", ""),
-    "stripe": os.environ.get("STRIPE_KEY", ""), # pentru plati reale
-    "telegram": os.environ.get("TELEGRAM_BOT", ""), # sa promoveze singur
+    "shopify": env("SHOPIFY_TOKEN", "SHOPIFY_KEY"),
+    "stripe": env("STRIPE_KEY", "STRIPE_SECRET_KEY", "STRIPE_PUBLISHABLE_KEY"),
+    "telegram": env("TELEGRAM_BOT", "TELEGRAM_TOKEN"),
+    "wallet": WALLET
 }
-
 produse_live = []
 comenzi_reale = []
 cicluri = 0
